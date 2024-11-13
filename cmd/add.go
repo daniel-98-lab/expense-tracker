@@ -13,7 +13,13 @@ var addExpense = &cobra.Command{
 	Use:   "add",
 	Short: "Add a new expense",
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Printf("Adding expense: %s - %.2f\n", addData.Description, addData.Amount)
+		expense, err := expenseTracker.CreateExpense(addData.Description, addData.Amount, addData.Date, addData.Category)
+
+		if err != nil {
+			fmt.Printf("Error Create expense: %s\n", err)
+			return
+		}
+		fmt.Printf("Adding expense with id: %d\n", expense.ID)
 	},
 }
 

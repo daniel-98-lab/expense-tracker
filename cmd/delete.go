@@ -13,6 +13,13 @@ var deleteExpense = &cobra.Command{
 	Use:   "delete",
 	Short: "Delete an expense",
 	Run: func(cmd *cobra.Command, args []string) {
+		err := expenseTracker.DeleteExpense(deleteData.ID)
+
+		if err != nil {
+			fmt.Printf("Error Delete expense: %s\n", err)
+			return
+		}
+
 		fmt.Printf("Deleting expense: %v\n", deleteData.ID)
 	},
 }

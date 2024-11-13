@@ -6,21 +6,28 @@ import (
 	"github.com/spf13/cobra"
 )
 
+var monthSummary int
+var categorySummary string
+
 var summaryExpense = &cobra.Command{
 	Use:   "summary",
 	Short: "View summary expense with filters",
 	Run: func(cmd *cobra.Command, args []string) {
-		summary := 12
-		fmt.Printf("Total expenses: $%v\n", summary)
+
+		summary, err := expenseTracker.GetSummaryExpense(monthSummary, categorySummary)
+
+		if err != nil {
+			fmt.Printf("Error Summary expense: %s\n", err)
+		}
+
+		fmt.Printf("Total Summary: %.2f\n", summary)
 	},
 }
 
 func init() {
-	var month int
-	var category string
 
-	summaryExpense.Flags().IntVarP(&month, "month", "m", 0, "Month to filter")
-	summaryExpense.Flags().StringVarP(&category, "category", "c", "", "Category to filter")
+	summaryExpense.Flags().IntVarP(&monthSummary, "month", "m", -1, "Month to filter")
+	summaryExpense.Flags().StringVarP(&categorySummary, "category", "c", "", "Category to filter")
 
 	rootCmd.AddCommand(summaryExpense)
 }

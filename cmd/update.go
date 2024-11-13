@@ -13,6 +13,11 @@ var updateExpense = &cobra.Command{
 	Use:   "update",
 	Short: "Update an expense",
 	Run: func(cmd *cobra.Command, args []string) {
+		err := expenseTracker.UpdateExpense(updateData.ID, updateData.Description, updateData.Amount, updateData.Date, updateData.Category)
+		if err != nil {
+			fmt.Printf("Error Update expense: %s\n", err)
+			return
+		}
 		fmt.Printf("Updating expense: %v\n", updateData.ID)
 	},
 }
