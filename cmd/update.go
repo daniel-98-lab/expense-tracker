@@ -29,6 +29,10 @@ func init() {
 	updateExpense.Flags().StringVarP(&updateData.Date, "date", "D", "", "Date of the expense")
 	updateExpense.Flags().StringVarP(&updateData.Category, "category", "c", "", "Category of the expense")
 	updateExpense.MarkFlagRequired("id")
+	updateExpense.MarkFlagRequired("description")
+	updateExpense.MarkFlagRequired("amount")
+	updateExpense.MarkFlagRequired("date")
+	updateExpense.MarkFlagRequired("category")
 
 	rootCmd.AddCommand(updateExpense)
 }
