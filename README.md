@@ -1,6 +1,5 @@
 # GitHub Expense Tracker
-
-Application to manage your finances
+Application to manage your finances. Challenge from [expense-tracker](https://roadmap.sh/projects/expense-tracker)
 
 ## Feature
 
