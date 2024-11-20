@@ -9,6 +9,7 @@ import (
 var monthSummary int
 var categorySummary string
 
+// summaryExpense is a Cobra command to display a summary of all expenses, optionally filtered by specific criteria or month.
 var summaryExpense = &cobra.Command{
 	Use:   "summary",
 	Short: "View summary expense with filters",

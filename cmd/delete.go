@@ -9,6 +9,7 @@ import (
 
 var deleteData models.Expense
 
+// deleteExpense is a Cobra Command to delete a Expense by Id
 var deleteExpense = &cobra.Command{
 	Use:   "delete",
 	Short: "Delete an expense",

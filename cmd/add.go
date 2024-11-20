@@ -9,6 +9,7 @@ import (
 
 var addData models.Expense
 
+// addExpense is a Cobra Command to add a new Expense with specifications as a description, amount, date and category
 var addExpense = &cobra.Command{
 	Use:   "add",
 	Short: "Add a new expense",

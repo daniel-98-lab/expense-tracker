@@ -8,6 +8,7 @@ import (
 
 var categoryList string
 
+// listExpense is a Cobra Command to display all expenses,optionally filtered by specific criteria
 var listExpense = &cobra.Command{
 	Use:   "list",
 	Short: "List all expenses",

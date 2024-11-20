@@ -10,6 +10,7 @@ import (
 
 var expenseTracker services.ExpenseTracker
 
+// rootCmd is the main command of this app, it serves as the entry point to execute various subcommands
 var rootCmd = &cobra.Command{
 	Use:   "expense-tracker",
 	Short: "Expense Tracker CLI",

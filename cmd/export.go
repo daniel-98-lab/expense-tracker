@@ -8,6 +8,7 @@ import (
 
 var typeFile string
 
+// exportExpense is a Cobra Command to export all expenses to a document in JSON or CSV format
 var exportExpense = &cobra.Command{
 	Use:   "export",
 	Short: "Export expenses to file",

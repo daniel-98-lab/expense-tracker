@@ -9,6 +9,7 @@ import (
 
 var updateData models.Expense
 
+// updateExpense is a Cobra Command to update a Expense with specifications as a description, amount, date and category
 var updateExpense = &cobra.Command{
 	Use:   "update",
 	Short: "Update an expense",

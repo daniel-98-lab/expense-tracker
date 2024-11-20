@@ -15,10 +15,14 @@ type ExpenseTracker struct {
 	filePath string
 }
 
+// constructor that initializes the ExpenseTracker service, its sets the file path used to save the expense data
 func NewExpenseService(filepath string) *ExpenseTracker {
 	return &ExpenseTracker{filePath: filepath}
 }
 
+// function to create a new expense
+// First verifies the date is correct, loads existing expenses from the root file,
+// Creates a new expense object, and finally call SaveExpenses to save it to the file
 func (s *ExpenseTracker) CreateExpense(description string, amount float64, date string, category string) (models.Expense, error) {
 	if _, err := parseDate(date); err != nil {
 		return models.Expense{}, err
@@ -43,6 +47,9 @@ func (s *ExpenseTracker) CreateExpense(description string, amount float64, date 
 	return newExpense, result
 }
 
+// function to remove an expense
+// Loads existing expenses,  checks if the expense exists, and if it doesn't, displays an error message.
+// If the expense exists, it removes the expense and saves the updated expense data.
 func (s *ExpenseTracker) DeleteExpense(id int) error {
 	expenses, err := s.LoadExpenses()
 
@@ -65,6 +72,7 @@ func (s *ExpenseTracker) DeleteExpense(id int) error {
 	return nil
 }
 
+// Exports data to a file. Only two formats are supported: JSON or CSV.
 func (s *ExpenseTracker) ExportExpense(typeExport string) error {
 
 	switch typeExport {
@@ -77,6 +85,7 @@ func (s *ExpenseTracker) ExportExpense(typeExport string) error {
 	}
 }
 
+// / function to get the summary of all expenses,
 func (s *ExpenseTracker) GetSummaryExpense(month int, category string) (float64, error) {
 	var expenses []models.Expense
 	var err error
@@ -96,6 +105,8 @@ func (s *ExpenseTracker) GetSummaryExpense(month int, category string) (float64,
 	return summary, nil
 }
 
+// Retrieves the summary of all expenses, optionally filtered by month and category.
+// If the month is -1, all expenses are included regardless of the month.
 func (s *ExpenseTracker) LoadExpenses() ([]models.Expense, error) {
 
 	file, err := os.Open(s.filePath)
@@ -124,6 +135,8 @@ func (s *ExpenseTracker) LoadExpenses() ([]models.Expense, error) {
 	return expenses, nil
 }
 
+// Loads all expenses and filters them by the specified category.
+// If no category is provided, all expenses are returned.
 func (s *ExpenseTracker) LoadExpensesByCategory(category string) ([]models.Expense, error) {
 	expenses, err := s.LoadExpenses()
 
@@ -145,6 +158,9 @@ func (s *ExpenseTracker) LoadExpensesByCategory(category string) ([]models.Expen
 	return filteredExpenses, nil
 }
 
+// Updates an existing expense with the given ID. It checks if the expense exists,
+// validates the provided date, and then updates the expense details (amount,
+// category, date, description). Finally, it saves the updated expenses to the file.
 func (s *ExpenseTracker) UpdateExpense(id int, description string, amount float64, date string, category string) error {
 	if _, err := parseDate(date); err != nil {
 		return err
@@ -177,6 +193,7 @@ func (s *ExpenseTracker) UpdateExpense(id int, description string, amount float6
 	return nil
 }
 
+// Saves the updated list of expenses to the file specified by the file path.
 func (s *ExpenseTracker) SaveExpenses(expenses []models.Expense) error {
 	file, err := os.Create(s.filePath)
 
@@ -200,6 +217,7 @@ func Any(expenses []models.Expense, condition func(models.Expense) bool) bool {
 	return false
 }
 
+// function to copy json files
 func CopyFile(filePath string) error {
 
 	//open origin file
@@ -231,6 +249,7 @@ func CopyFile(filePath string) error {
 	return nil
 }
 
+// Creates a new CSV file and exports the expenses from the original file into the new CSV file.
 func JSONToCSV(filePath string) error {
 	fileOrigin, err := os.Open(filePath)
 	if err != nil {
@@ -272,6 +291,7 @@ func JSONToCSV(filePath string) error {
 	return nil
 }
 
+// Checks if the given date matches the specified month.
 func isMatchingMonth(date string, month int) (result bool) {
 	parsedDate, err := parseDate(date)
 	if err != nil {
@@ -281,6 +301,7 @@ func isMatchingMonth(date string, month int) (result bool) {
 	return int(parsedDate.Month()) == month
 }
 
+// Verifies if the provided date is valid.
 func parseDate(date string) (time.Time, error) {
 	dateParse, err := time.Parse("2006-01-02", date)
 	return dateParse, err
